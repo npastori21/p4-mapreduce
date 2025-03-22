@@ -7,4 +7,6 @@ By Nicholas Pastori <npastori@umich.edu>, Evan James <evjames@umich.edu>, Emily 
 ```console
 $ python3 -m venv env/
 $ source env/bin/activate
+$ pip install -r requirements.txt
+$ pip install -e .
 ```
