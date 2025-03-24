@@ -35,6 +35,7 @@ bundle.js
 # EECS 485 Project 4
 tmp
 output
+threads/
 
 # EECS 485 Project 5
 output*
