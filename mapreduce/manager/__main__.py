@@ -5,7 +5,9 @@ import logging
 import json
 import time
 import click
-import mapreduce.utils
+import threading
+import socket
+from mapreduce.utils import tcp_server
 
 
 # Configure logging
@@ -31,10 +33,38 @@ class Manager:
         }
         LOGGER.debug("TCP recv\n%s", json.dumps(message_dict, indent=2))
 
-        # TODO: you should remove this. This is just so the program doesn't
-        # exit immediately!
-        LOGGER.debug("IMPLEMENT ME!")
+        self.host = host
+        self.port = port
+        self.threads = []
+
+        #setup temp directory
+        prefix = f"mapreduce-shared-"
+        with tempfile.TemporaryDirectory(prefix=prefix) as tmpdir:
+            LOGGER.info("Created tmpdir %s", tmpdir)
+            # FIXME: Add all code needed so that this `with` block doesn't end until the Manager shuts down.
+        LOGGER.info("Cleaned up tmpdir %s", tmpdir)
         time.sleep(120)
+
+        #set tcp thread
+        tcp_thread = threading.Thread(target=tcp_server)
+        self.threads.append(tcp_thread)
+        tcp_thread.start()
+
+        #set worker thread
+        worker_thread = threading.Thread(target=self.worker_heartbeats)
+        self.threads.append(worker_thread)
+        worker_thread.start()
+
+        #fault tolerance thread
+        fault_tolerance_thread = threading.Thread(target=self.fault_tolerance, daemon=True)
+        fault_tolerance_thread.start()
+        self.threads.append(fault_tolerance_thread)
+        
+        #join threads when they stop running
+        for thread in self.threads:
+            thread.join()
+        
+
 
 
 @click.command()
