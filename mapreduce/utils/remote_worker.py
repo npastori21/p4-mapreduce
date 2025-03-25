@@ -52,7 +52,7 @@ class RemoteWorker:
             LOGGER.info("CONNECTION REFUSED: worker %s marked dead",
                         (self.host, self.port))
             self.status = "dead"
-            if self.current_task is not None:
+            if self.task is not None:
                 task, job = self.task
                 job.task_reset(task)
                 self.task = None

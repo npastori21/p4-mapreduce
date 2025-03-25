@@ -143,11 +143,12 @@ class Worker:
                     for num_partitions in range(self.task["num_partitions"]):
                         filename = f"maptask{num}-part{
                             str(num_partitions).zfill(5)}"
-                        path = Path(tmpdir / filename)
+                        path = Path(tmpdir + filename)
                         files[num_partitions] = stack.enter_context(
                             path.open("a", encoding='utf-8'))
                     for line in map_process.stdout:
-                        hexdigest = hashlib.md5(line.split("\t").encode("utf-8")).hexdigest()
+                        key, _ = line.split("\t")
+                        hexdigest = hashlib.md5(key.encode("utf-8")).hexdigest()
                         partition_num = int(hexdigest, base=16) % self.task["num_partitions"]
                         files[partition_num].write(line)
             for item in Path(tmpdir).iterdir():
