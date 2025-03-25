@@ -21,10 +21,10 @@ class Job:
         """Change job state."""
         if self.state == "start":
             self.state = "mapping"
-            self.get_mapping_tasks()
+            self.mapping_partition()
         elif self.state == "mapping":
             self.state = "reducing"
-            self.get_reducing_tasks(new_dir)
+            self.reducing_partition(new_dir)
         else:
             self.state = "f"
 
