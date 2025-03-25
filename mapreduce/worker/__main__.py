@@ -125,41 +125,6 @@ class Worker:
                 LOGGER.info("REDUCING: Exception thrown")
 
 
-    def reduce(self):
-        """Execute reducing task."""
-        task_id = str(self.task["task_id"]).zfill(5)
-        output_dir = Path(self.task["output_directory"])
-        filename = f"part-{task_id}"
-        input_paths = self.task["input_paths"]
-        dest = output_dir / filename
-        prefix = f"mapreduce-local-task{task_id}-"
-
-        with tempfile.TemporaryDirectory(prefix=prefix) as tmpdir:
-            with ExitStack() as stack:
-                out = stack.enter_context(
-                    open(Path(tmpdir) / filename, 'w', encoding='utf-8'))
-                instreams = [stack.enter_context(open(path, 'r',
-                                                      encoding='utf-8'))
-                             for path in input_paths]
-                with subprocess.Popen(
-                    [self.task["executable"]],
-                    text=True,
-                    stdin=subprocess.PIPE,
-                    stdout=out,
-                ) as reduce_process:
-                    for line in heapq.merge(*instreams):
-                        reduce_process.stdin.write(line)
-
-                shutil.move(Path(tmpdir) / filename, dest)
-        message = {
-            "message_type": "finished",
-            "task_id": self.task["task_id"],
-            "worker_host": self.host,
-            "worker_port": self.port
-        }
-        self.send_message(message)
-
-
     def map(self):
         """Execute mapping task."""
         inputs = self.task["input_paths"]
@@ -198,6 +163,40 @@ class Worker:
                 "worker_port": self.port
             }
         self.send_message(message)
+
+    def reduce(self):
+            """Execute reducing task."""
+            task_id = str(self.task["task_id"]).zfill(5)
+            output_dir = Path(self.task["output_directory"])
+            filename = f"part-{task_id}"
+            input_paths = self.task["input_paths"]
+            dest = output_dir / filename
+            prefix = f"mapreduce-local-task{task_id}-"
+
+            with tempfile.TemporaryDirectory(prefix=prefix) as tmpdir:
+                with ExitStack() as stack:
+                    out = stack.enter_context(
+                        open(Path(tmpdir) / filename, 'w', encoding='utf-8'))
+                    instreams = [stack.enter_context(open(path, 'r',
+                                                        encoding='utf-8'))
+                                for path in input_paths]
+                    with subprocess.Popen(
+                        [self.task["executable"]],
+                        text=True,
+                        stdin=subprocess.PIPE,
+                        stdout=out,
+                    ) as reduce_process:
+                        for line in heapq.merge(*instreams):
+                            reduce_process.stdin.write(line)
+
+                    shutil.move(Path(tmpdir) / filename, dest)
+            message = {
+                "message_type": "finished",
+                "task_id": self.task["task_id"],
+                "worker_host": self.host,
+                "worker_port": self.port
+            }
+            self.send_message(message)
 
 
     def send_message(self, m):

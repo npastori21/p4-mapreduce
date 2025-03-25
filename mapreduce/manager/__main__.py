@@ -93,9 +93,9 @@ class Manager:
                             # Worker is dead
                             LOGGER.info("marked worker as dead %s ", (
                                 val.host, val.port))
-                            val.change_status("dead")
+                            val.update_status("dead")
                             val = val.unassign_task()
-                            if val:
+                            if val is not None:
                                 val[1].task_reset(val[0])
                 time.sleep(1)
 
@@ -190,7 +190,8 @@ class Manager:
                 w = (message_dict["worker_host"], message_dict["worker_port"])
                 if w in self.workers and self.workers[w].task:
                     val = self.workers[w].unassign_task()
-                    val[1].task_reset(val[0])
+                    if val is not None:
+                        val[1].task_reset(val[0])
                 self.workers[w] = worker
                 worker.send_message(new_message)
 
@@ -207,7 +208,7 @@ class Manager:
             elif message == "finished":
                 self.job_status += 1
                 w = (message_dict["worker_host"], message_dict["worker_port"])
-                self.workers[w].next_status("ready")
+                self.workers[w].update_status("ready")
                 LOGGER.info("worker %s is finished and marked ready", w)
                 LOGGER.info("CURR counter is %s", self.job_status)
 

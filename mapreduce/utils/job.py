@@ -28,7 +28,6 @@ class Job:
         else:
             self.state = "f"
 
-
     def mapping_partition(self):
         """Partition mapping."""
         scan = [[] for _ in range(self.info["num_mappers"])]
