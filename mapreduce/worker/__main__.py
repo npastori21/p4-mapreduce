@@ -88,6 +88,7 @@ class Worker:
             }
             try:
                 udp_client(heartbeat, self.manager_host, self.manager_port)
+                LOGGER.info("HEARTBEAT")
             except ConnectionRefusedError:
                 LOGGER.info("HEARTBEAT: Connection refused")
                 continue
@@ -97,6 +98,7 @@ class Worker:
     def handle_messages(self, msg):
         """Handle messages."""
         message = msg.get("message_type")
+        LOGGER.info("WORKER RECEIVED MESSAGE %s", message)
 
         # Shut down
         if message == "shutdown":
@@ -127,6 +129,7 @@ class Worker:
 
     def map(self):
         """Execute mapping task."""
+        LOGGER.info("MAPPING")
         inputs = self.task["input_paths"]
         num = str(self.task["task_id"]).zfill(5)
         prefix = f"mapreduce-local-task{num}-"
@@ -140,6 +143,7 @@ class Worker:
                     stdout=subprocess.PIPE,
                     text=True,
                 ) as map_process, ExitStack() as stack:
+                    LOGGER.info("MAPPING EXECUTABLE")
                     for num_partitions in range(self.task["num_partitions"]):
                         filename = f"maptask{num}-part{
                             str(num_partitions).zfill(5)}"
@@ -167,6 +171,7 @@ class Worker:
 
     def reduce(self):
             """Execute reducing task."""
+            LOGGER.info("REDUCING")
             task_id = str(self.task["task_id"]).zfill(5)
             output_dir = Path(self.task["output_directory"])
             filename = f"part-{task_id}"
@@ -202,6 +207,7 @@ class Worker:
 
     def send_message(self, m):
         """Send message to manager."""
+        LOGGER.info("WORKER TASK DONE")
         try:
             tcp_client(m, self.manager_host, self.manager_port)
         except ConnectionRefusedError:

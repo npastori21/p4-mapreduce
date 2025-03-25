@@ -69,13 +69,19 @@ class Manager:
         # fault_tolerance_thread.start()
 
         self.handle_jobs()
+        LOGGER.info("JOBS COMPLETED")
         # Join threads when they stop running
-        for thread in self.threads:
-            thread.join()
+        # for thread in self.threads:
+        #     thread.join()
+
+        messages_thread.join()
+        worker_thread.join()
+        workers_status_thread.join()
 
     def handle_heartbeats(self, worker):
             """Update worker heartbeat."""
             if worker["message_type"] == "heartbeat" and len(self.workers) > 0:
+                LOGGER.info("MANAGER RECEIVED HEARTBEAT")
                 # Get worker's host and port
                 host = worker["worker_host"]
                 port = worker["worker_port"]
@@ -92,7 +98,7 @@ class Manager:
                     if val.check_if_missing(time.time()):
                         if val.status != "dead":
                             # Worker is dead
-                            LOGGER.info("marked worker as dead %s ", (
+                            LOGGER.info("DEAD WORKER: %s ", (
                                 val.host, val.port))
                             val.update_status("dead")
                             val = val.unassign_task()
@@ -108,14 +114,14 @@ class Manager:
                                                     directory,
                                                     job,
                                                     task)
-                LOGGER.info("assigned MAPPER")
+                LOGGER.info("ASSIGNED MAPPER")
             else:
                 self.workers[worker_num].assign_reducer(task.file_paths,
                                                         task.task_id,
                                                         directory,
                                                         job,
                                                         task)
-                LOGGER.info("assigned REDUCER")
+                LOGGER.info("ASSIGNED REDUCER")
 
     def get_worker(self, job, tmpdir):
             """Get next ready worker."""
@@ -123,7 +129,7 @@ class Manager:
             for key, val in self.workers.items():
                 if val.status == "ready":
                     worker_num = key
-                    LOGGER.info("picked worker %s", key)
+                    LOGGER.info("PICKED WORKER %s", key)
                     break
             # If there is an available workers
             if worker_num:
@@ -163,16 +169,17 @@ class Manager:
                                     self.job_status = 0
                                     info = 0
                                     if job.state == "reducing":
-                                        LOGGER.info("starting REDUCER")
+                                        LOGGER.info("STARTING REDUCER")
                                         info = job.info["num_reducers"]
                                 elif job.task_ready():
                                     self.get_worker(job, tmpdir)
-                    LOGGER.info("Cleaned up tmpdir %s", tmpdir)
+                    LOGGER.info("Cleaned tmpdir %s", tmpdir)
 
     def handle_messages(self, message_dict):
             """Handle messages."""
             message = message_dict["message_type"]
             new_message = {}
+            LOGGER.info("MANAGER RECEIVED MESSAGE %s", message)
 
             # Shut down
             if message == "shutdown":
@@ -210,8 +217,6 @@ class Manager:
                 self.job_status += 1
                 w = (message_dict["worker_host"], message_dict["worker_port"])
                 self.workers[w].update_status("ready")
-                LOGGER.info("worker %s is finished and marked ready", w)
-                LOGGER.info("CURR counter is %s", self.job_status)
 
 
 @click.command()

@@ -2,8 +2,10 @@
 import os
 from pathlib import Path
 import queue
+import logging
 from mapreduce.utils.task import Task
 
+LOGGER = logging.getLogger(__name__)
 
 class Job:
     """Job class."""
@@ -30,6 +32,7 @@ class Job:
 
     def mapping_partition(self):
         """Partition mapping."""
+        LOGGER.info("STARTING JOB MAPPING PARTITION")
         scan = [[] for _ in range(self.info["num_mappers"])]
         all_entries = os.listdir(self.input_dir)
         files = [str(self.input_dir/entry) for entry in all_entries
@@ -44,6 +47,7 @@ class Job:
 
     def reducing_partition(self, new_dir):
         """Partition reducing."""
+        LOGGER.info("STARTING JOB REDUCING PARTITION")
         scan = [[] for _ in range(self.info["num_reducers"])]
         for i in range(self.info["num_reducers"]):
             pattern = f"maptask*-part{str(i).zfill(5)}"
