@@ -68,6 +68,7 @@ class Manager:
         # self.threads.append(fault_tolerance_thread)
         # fault_tolerance_thread.start()
 
+        self.handle_jobs()
         # Join threads when they stop running
         for thread in self.threads:
             thread.join()
