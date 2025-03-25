@@ -29,8 +29,8 @@ class RemoteWorker:
                 "output_directory": directory,
                 "num_partitions": job.info["num_reducers"],
             })
-        self.current_task = (task_obj, job)
-        self.send_tcp_msg(m)
+        self.task = (task_obj, job)
+        self.send_message(m)
 
     def assign_reducer(self, task, task_id, directory, job, task_obj):
         """Assign a reduce task to this Worker."""
@@ -41,8 +41,8 @@ class RemoteWorker:
                 "executable": job.info["reducer_executable"],
                 "output_directory": directory
             })
-        self.current_task = (task_obj, job)
-        self.send_tcp_msg(m)
+        self.task = (task_obj, job)
+        self.send_message(m)
 
     def send_message(self, message):
         """Send message."""

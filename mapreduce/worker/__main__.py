@@ -112,7 +112,7 @@ class Worker:
         elif message == "new_map_task":
             self.task = msg
             try:
-                self.mapping()
+                self.map()
             except FileNotFoundError:
                 LOGGER.info("MAPPING: Exception thrown")
 
@@ -120,7 +120,7 @@ class Worker:
         elif message == "new_reduce_task":
             self.task = msg
             try:
-                self.reducing()
+                self.reduce()
             except FileNotFoundError:
                 LOGGER.info("REDUCING: Exception thrown")
 
