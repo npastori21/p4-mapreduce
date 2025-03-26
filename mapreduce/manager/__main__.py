@@ -18,6 +18,7 @@ from mapreduce.utils import Job
 
 # Configure logging
 LOGGER = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG, filename="debug.log")
 
 
 class Manager:
@@ -42,7 +43,17 @@ class Manager:
         self.signals = ThreadSafeOrderedDict()
         self.signals["shutdown"] = False
 
-        # TCP thread for messages
+       
+
+        # UDP thread for heartbeats (port =+ 1 to prevent overlap)
+        worker_thread = threading.Thread(target=udp_server,args=(self.host,
+                                                self.port,
+                                                self.signals,
+                                                self.handle_heartbeats))
+        self.threads.append(worker_thread)
+        worker_thread.start()
+
+         # TCP thread for messages
         messages_thread = threading.Thread(target=tcp_server,args=(self.host,
                                                 self.port,
                                                 self.signals,
@@ -50,13 +61,9 @@ class Manager:
         self.threads.append(messages_thread)
         messages_thread.start()
 
-        # UDP thread for heartbeats
-        worker_thread = threading.Thread(target=udp_server,args=(self.host,
-                                                self.port,
-                                                self.signals,
-                                                self.handle_heartbeats))
-        self.threads.append(worker_thread)
-        worker_thread.start()
+        # job_thread = threading.Thread(target=self.handle_jobs, daemon=True)
+        # self.threads.append(job_thread)
+        # job_thread.start()
 
         # Thread for checking worker statuses
         workers_status_thread = threading.Thread(target=self.check_heartbeats)
@@ -67,16 +74,21 @@ class Manager:
         # fault_tolerance_thread = threading.Thread(target=self.fault_tolerance, daemon=True)
         # self.threads.append(fault_tolerance_thread)
         # fault_tolerance_thread.start()
-
+        LOGGER.info("starting jobs")
         self.handle_jobs()
-        LOGGER.info("JOBS COMPLETED")
+        
+       # LOGGER.info("JOBS COMPLETED")
         # Join threads when they stop running
         # for thread in self.threads:
         #     thread.join()
-
-        messages_thread.join()
         worker_thread.join()
+        LOGGER.info("workers thread")
+        # job_thread.join()
+        LOGGER.info("jobs thread")
+        messages_thread.join()
+        LOGGER.info("messages thread")
         workers_status_thread.join()
+        LOGGER.info("status thread")
 
     def handle_heartbeats(self, worker):
             """Update worker heartbeat."""
@@ -89,6 +101,10 @@ class Manager:
                     # If worker is alive, update heartbeat
                     if self.workers[(host, port)].status != "dead":
                         self.workers[(host, port)].update_heartbeat(time.time())
+                        LOGGER.info("Updated heartbeat for worker: %s", (host, port))
+                else: # Unregistered worker, ignore
+                    LOGGER.warning("Received heartbeat from unregistered worker: %s", (host, port))
+                    return
 
     def check_heartbeats(self):
             """Check if any workers are dead."""
@@ -96,6 +112,7 @@ class Manager:
                 for _, val in self.workers.items():
                     # Wait 10 secs
                     if val.check_if_missing(time.time()):
+                        LOGGER.info("Worker %s last heartbeat: %s", val.host, val.last_heartbeat)
                         if val.status != "dead":
                             # Worker is dead
                             LOGGER.info("DEAD WORKER: %s ", (
@@ -131,7 +148,7 @@ class Manager:
                     worker_num = key
                     LOGGER.info("PICKED WORKER %s", key)
                     break
-            # If there is an available workers
+            # If there is an available worker
             if worker_num:
                 self.workers[worker_num].update_status("busy")
                 if job.state == "mapping":
@@ -139,17 +156,21 @@ class Manager:
                 else:
                     directory = str(job.out_dir)
                 task = job.task_next()
+                if task is None: # No more tasks
+                    return
                 self.assign_task(job, directory, worker_num, task)
 
 
     def handle_jobs(self):
             """Assign jobs to workers and run."""
+            LOGGER.info("in jobs")
             while not self.signals["shutdown"]:
                 # While not shutdown and there are more jobs
                 if self.jobs.qsize() > 0:
                     # Get job
                     job = self.jobs.get()
                     job.next_state()
+                    LOGGER.info("Processing job %s, current state: %s", job.id_, job.state)
                     # Delete directory if it already exists
                     if job.out_dir.exists() and job.out_dir.is_dir():
                         shutil.rmtree(job.out_dir)
@@ -200,7 +221,8 @@ class Manager:
                     val = self.workers[w].unassign_task()
                     if val is not None:
                         val[1].task_reset(val[0])
-                self.workers[w] = worker
+                else:
+                    self.workers[w] = worker
                 worker.send_message(new_message)
 
             # Add new job
@@ -211,6 +233,7 @@ class Manager:
                         message_dict)
                 self.job_id += 1
                 self.jobs.put(job)
+                LOGGER.info("ADDED JOB %s", job.id_)
 
             # Job is done
             elif message == "finished":

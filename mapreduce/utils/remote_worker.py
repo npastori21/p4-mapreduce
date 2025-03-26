@@ -6,6 +6,7 @@ from mapreduce.utils.ordered_dict import ThreadSafeOrderedDict
 
 TIME_LIMIT = 10
 LOGGER = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG, filename="debug.log")
 
 
 class RemoteWorker:
@@ -70,7 +71,7 @@ class RemoteWorker:
     def unassign_task(self):
         """Unassign task when worker is dead."""
         if self.task:
-            old_task, old_job = self.task
+            (old_task, old_job) = self.task
             self.task = None
             return old_task, old_job
         return None

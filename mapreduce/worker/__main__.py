@@ -19,6 +19,7 @@ from mapreduce.utils import ThreadSafeOrderedDict
 
 # Configure logging
 LOGGER = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG, filename="debug.log")
 
 
 class Worker:
@@ -131,30 +132,30 @@ class Worker:
         """Execute mapping task."""
         LOGGER.info("MAPPING")
         inputs = self.task["input_paths"]
+        files = {}
         num = str(self.task["task_id"]).zfill(5)
         prefix = f"mapreduce-local-task{num}-"
         with tempfile.TemporaryDirectory(prefix=prefix) as tmpdir:
             for input_path in inputs:
-                files = {}
-            with open(input_path, encoding='utf-8') as infile:
-                with subprocess.Popen(
-                    [self.task["executable"]],
-                    stdin=infile,
-                    stdout=subprocess.PIPE,
-                    text=True,
-                ) as map_process, ExitStack() as stack:
-                    LOGGER.info("MAPPING EXECUTABLE")
-                    for num_partitions in range(self.task["num_partitions"]):
-                        filename = f"maptask{num}-part{
-                            str(num_partitions).zfill(5)}"
-                        path = Path(tmpdir + filename)
-                        files[num_partitions] = stack.enter_context(
-                            path.open("a", encoding='utf-8'))
-                    for line in map_process.stdout:
-                        key, _ = line.split("\t")
-                        hexdigest = hashlib.md5(key.encode("utf-8")).hexdigest()
-                        partition_num = int(hexdigest, base=16) % self.task["num_partitions"]
-                        files[partition_num].write(line)
+                with open(input_path, encoding='utf-8') as infile:
+                    with subprocess.Popen(
+                        [self.task["executable"]],
+                        stdin=infile,
+                        stdout=subprocess.PIPE,
+                        text=True,
+                    ) as map_process, ExitStack() as stack:
+                        LOGGER.info("MAPPING EXECUTABLE")
+                        for num_partitions in range(self.task["num_partitions"]):
+                            filename = f"maptask{num}-part{
+                                str(num_partitions).zfill(5)}"
+                            path = Path(tmpdir) / filename
+                            files[num_partitions] = stack.enter_context(
+                                path.open("a", encoding='utf-8'))
+                        for line in map_process.stdout:
+                            key, _ = line.split("\t")
+                            hexdigest = hashlib.md5(key.encode("utf-8")).hexdigest()
+                            partition_num = int(hexdigest, base=16) % self.task["num_partitions"]
+                            files[partition_num].write(line)
             for item in Path(tmpdir).iterdir():
                 if item.is_file():
                     subprocess.run(["sort", "-o", item, item], check=True)
