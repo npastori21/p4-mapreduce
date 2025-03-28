@@ -85,7 +85,7 @@ class Worker:
             heartbeat = {
                 "message_type": "heartbeat",
                 "worker_host": self.host,
-                "worker_port": self.port
+                "worker_port": self.port,
             }
             try:
                 udp_client(heartbeat, self.manager_host, self.manager_port)

@@ -13,7 +13,7 @@ def tcp_server(host, port, signals, handle_messages):
         sock.bind((host, port))
         sock.listen()
         sock.settimeout(1)
-        LOGGER.info("TCP Server is listening on port {port} and is hosted on {host}")
+        LOGGER.info(f"TCP Server is listening on port {port} and is hosted on {host}")
         while not signals["shutdown"]:
             try:
                 conn, _ = sock.accept()
@@ -27,6 +27,7 @@ def tcp_server(host, port, signals, handle_messages):
                 while True:
                     try:
                         data = conn.recv(4096)
+                        LOGGER.info(f"Data: {data}")
                         if not data:
                             LOGGER.warning("No data received from TCP connection")
                             break
@@ -88,15 +89,16 @@ def udp_server(host, port, signals, handle_messages):
                     handle_messages(message)
                 except json.JSONDecodeError:
                     continue
-                print(message)
+                
 
 
 def udp_client(msg, host, port):
     """Send messages via UDP."""
-   
+    LOGGER.info(msg)
+
         # Create an INET, DGRAM socket, this is UDP
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-        sock.connect((host, port))
+        # sock.connect((host, port))
         # Send a message
         msg_str = json.dumps(msg)
         LOGGER.info(f"Sending message: {msg_str}")
