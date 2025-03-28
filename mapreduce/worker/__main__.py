@@ -8,9 +8,10 @@ import hashlib
 import shutil
 import subprocess
 import logging
-import click
-from contextlib import ExitStack
 import heapq
+from contextlib import ExitStack
+import click
+
 from mapreduce.utils import tcp_client
 from mapreduce.utils import udp_client
 from mapreduce.utils import tcp_server
@@ -24,6 +25,7 @@ logging.basicConfig(level=logging.DEBUG, filename="debug.log")
 
 class Worker:
     """A class representing a Worker node in a MapReduce cluster."""
+
     def __init__(self, host, port, manager_host, manager_port):
         """Construct a Worker instance and start listening for messages."""
         LOGGER.info(
@@ -36,49 +38,42 @@ class Worker:
         )
 
         # Worker attributes
-        self.host = host
-        self.port = port
-        self.threads = []
+        self.host_port = host, port
         self.ack = False
         self.task = None
-        self.manager_host = manager_host
-        self.manager_port = manager_port
+        self.m_host_port = manager_host, manager_port
         self.signals = ThreadSafeOrderedDict()
         self.signals["shutdown"] = False
 
         messages_thread = threading.Thread(target=tcp_server, args=(
-                                            self.host, self.port,
-                                            self.signals, self.handle_messages))
+                                            self.host_port[0],
+                                            self.host_port[1],
+                                            self.signals,
+                                            self.handle_messages))
         messages_thread.start()
-        self.threads.append(messages_thread)
         self.register()
         self.acknowledged = threading.Condition()
 
         heartbeats_thread = threading.Thread(target=self.heartbeat)
         heartbeats_thread.start()
-        self.threads.append(heartbeats_thread)
 
         # Join threads when they stop running
-        # for thread in self.threads:
-        #     thread.join()
         messages_thread.join()
         LOGGER.info("Messages thread")
         heartbeats_thread.join()
         LOGGER.info("Heartbeats thread")
 
-
     def register(self):
         """Register with manager."""
         message = {
             "message_type": "register",
-            "worker_host": self.host,
-            "worker_port": self.port,
+            "worker_host": self.host_port[0],
+            "worker_port": self.host_port[1],
         }
         try:
-            tcp_client(message, self.manager_host, self.manager_port)
+            tcp_client(message, self.m_host_port[0], self.m_host_port[1])
         except ConnectionRefusedError:
             LOGGER.info("REGISTER exception")
-
 
     def heartbeat(self):
         """Send heartbeat."""
@@ -88,17 +83,16 @@ class Worker:
         while not self.signals["shutdown"]:
             heartbeat = {
                 "message_type": "heartbeat",
-                "worker_host": self.host,
-                "worker_port": self.port,
+                "worker_host": self.host_port[0],
+                "worker_port": self.host_port[1],
             }
             try:
-                udp_client(heartbeat, self.manager_host, self.manager_port)
+                udp_client(heartbeat, self.m_host_port[0], self.m_host_port[1])
                 LOGGER.info("HEARTBEAT")
             except ConnectionRefusedError:
                 LOGGER.info("HEARTBEAT: Connection refused")
                 continue
             time.sleep(2)
-
 
     def handle_messages(self, msg):
         """Handle worker messages."""
@@ -131,16 +125,14 @@ class Worker:
             except FileNotFoundError:
                 LOGGER.info("REDUCING exception")
 
-
     def map(self):
         """Execute mapping task."""
         LOGGER.info("MAPPING")
-        inputs = self.task["input_paths"]
         files = {}
         num = str(self.task["task_id"]).zfill(5)
-        prefix = f"mapreduce-local-task{num}-"
-        with tempfile.TemporaryDirectory(prefix=prefix) as tmpdir:
-            for input_path in inputs:
+        pre = f"mapreduce-local-task{num}-"
+        with tempfile.TemporaryDirectory(prefix=pre)as tmpdir:
+            for input_path in self.task["input_paths"]:
                 with open(input_path, encoding='utf-8') as infile:
                     with subprocess.Popen(
                         [self.task["executable"]],
@@ -149,72 +141,70 @@ class Worker:
                         text=True,
                     ) as map_process, ExitStack() as stack:
                         LOGGER.info("MAPPING EXECUTABLE")
-                        for num_partitions in range(self.task["num_partitions"]):
+                        for num_parts in range(self.task["num_partitions"]):
                             filename = f"maptask{num}-part{
-                                str(num_partitions).zfill(5)}"
-                            path = Path(tmpdir) / filename
-                            files[num_partitions] = stack.enter_context(
-                                path.open("a", encoding='utf-8'))
+                                str(num_parts).zfill(5)}"
+                            files[num_parts] = stack.enter_context(
+                                (Path(tmpdir) / filename).open(
+                                    "a", encoding='utf-8'))
                         for line in map_process.stdout:
                             key, _ = line.split("\t")
-                            hexdigest = hashlib.md5(key.encode("utf-8")).hexdigest()
-                            partition_num = int(hexdigest, base=16) % self.task["num_partitions"]
-                            files[partition_num].write(line)
+                            key = key.encode("utf-8")
+                            hexdigest = hashlib.md5(key).hexdigest()
+                            files[int(hexdigest, base=16) %
+                                  self.task["num_partitions"]].write(line)
             for item in Path(tmpdir).iterdir():
                 if item.is_file():
                     subprocess.run(["sort", "-o", item, item], check=True)
-                    dest = os.path.join(
-                        self.task["output_directory"], item.name)
-                    shutil.move(item, dest)
-        message = {
+                    shutil.move(item, os.path.join(
+                        self.task["output_directory"], item.name))
+        self.send_message({
                 "message_type": "finished",
                 "task_id": self.task["task_id"],
-                "worker_host": self.host,
-                "worker_port": self.port
-            }
-        self.send_message(message)
+                "worker_host": self.host_port[0],
+                "worker_port": self.host_port[1]
+            })
 
     def reduce(self):
-            """Execute reducing task."""
-            LOGGER.info("REDUCING")
-            task_id = str(self.task["task_id"]).zfill(5)
-            output_dir = Path(self.task["output_directory"])
-            filename = f"part-{task_id}"
-            input_paths = self.task["input_paths"]
-            dest = output_dir / filename
-            prefix = f"mapreduce-local-task{task_id}-"
+        """Execute reducing task."""
+        LOGGER.info("REDUCING")
+        task_id = str(self.task["task_id"]).zfill(5)
+        output_dir = Path(self.task["output_directory"])
+        filename = f"part-{task_id}"
+        input_paths = self.task["input_paths"]
+        dest = output_dir / filename
+        prefix = f"mapreduce-local-task{task_id}-"
 
-            with tempfile.TemporaryDirectory(prefix=prefix) as tmpdir:
-                with ExitStack() as stack:
-                    out = stack.enter_context(
-                        open(Path(tmpdir) / filename, 'w', encoding='utf-8'))
-                    instreams = [stack.enter_context(open(path, 'r',
-                                                        encoding='utf-8'))
-                                for path in input_paths]
-                    with subprocess.Popen(
-                        [self.task["executable"]],
-                        text=True,
-                        stdin=subprocess.PIPE,
-                        stdout=out,
-                    ) as reduce_process:
-                        for line in heapq.merge(*instreams):
-                            reduce_process.stdin.write(line)
+        with tempfile.TemporaryDirectory(prefix=prefix) as tmpdir:
+            with ExitStack() as stack:
+                out = stack.enter_context(
+                    open(Path(tmpdir) / filename, 'w', encoding='utf-8'))
+                instreams = [stack.enter_context(open(path, 'r',
+                                                      encoding='utf-8'))
+                             for path in input_paths]
+                with subprocess.Popen(
+                    [self.task["executable"]],
+                    text=True,
+                    stdin=subprocess.PIPE,
+                    stdout=out,
+                ) as reduce_process:
+                    for line in heapq.merge(*instreams):
+                        reduce_process.stdin.write(line)
 
-                    shutil.move(Path(tmpdir) / filename, dest)
-            message = {
-                "message_type": "finished",
-                "task_id": self.task["task_id"],
-                "worker_host": self.host,
-                "worker_port": self.port
-            }
-            self.send_message(message)
-
+                shutil.move(Path(tmpdir) / filename, dest)
+        message = {
+            "message_type": "finished",
+            "task_id": self.task["task_id"],
+            "worker_host": self.host_port[0],
+            "worker_port": self.host_port[1]
+        }
+        self.send_message(message)
 
     def send_message(self, m):
         """Send message to manager."""
         LOGGER.info("WORKER TASK DONE")
         try:
-            tcp_client(m, self.manager_host, self.manager_port)
+            tcp_client(m, self.m_host_port[0], self.m_host_port[1])
         except ConnectionRefusedError:
             LOGGER.info("FINISHED JOB: Connection refused")
 

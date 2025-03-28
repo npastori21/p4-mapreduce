@@ -79,5 +79,3 @@ class RemoteWorker:
     def update_status(self, status):
         """Update status of worker."""
         self.status = status
-
-   

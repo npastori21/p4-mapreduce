@@ -7,6 +7,7 @@ from mapreduce.utils.task import Task
 
 LOGGER = logging.getLogger(__name__)
 
+
 class Job:
     """Job class."""
 
@@ -59,7 +60,7 @@ class Job:
             self.tasks.put(Task(i, "reduce", scan[i]))
 
     def task_reset(self, task):
-        """Put task back into queue to be reassigned"""
+        """Put task back into queue to be reassigned."""
         self.tasks.put(task)
 
     def task_ready(self):
