@@ -45,6 +45,7 @@ def tcp_server(host, port, signals, handle_messages):
                     handle_messages(message_dict)
                     LOGGER.info(f"sent")
                 except json.JSONDecodeError:
+                    LOGGER.info("decode error")
                     continue
 
 

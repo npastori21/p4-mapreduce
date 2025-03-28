@@ -48,7 +48,7 @@ class Worker:
 
         messages_thread = threading.Thread(target=tcp_server, args=(
                                             self.host, self.port,
-                                            self.signals, self.handle_messages,))
+                                            self.signals, self.handle_messages))
         messages_thread.start()
         self.threads.append(messages_thread)
         self.register()
@@ -59,8 +59,12 @@ class Worker:
         self.threads.append(heartbeats_thread)
 
         # Join threads when they stop running
-        for thread in self.threads:
-            thread.join()
+        # for thread in self.threads:
+        #     thread.join()
+        messages_thread.join()
+        LOGGER.info("Messages thread")
+        heartbeats_thread.join()
+        LOGGER.info("Heartbeats thread")
 
 
     def register(self):
@@ -73,7 +77,7 @@ class Worker:
         try:
             tcp_client(message, self.manager_host, self.manager_port)
         except ConnectionRefusedError:
-            LOGGER.info("REGISTER: Connection refused")
+            LOGGER.info("REGISTER exception")
 
 
     def heartbeat(self):
@@ -97,7 +101,7 @@ class Worker:
 
 
     def handle_messages(self, msg):
-        """Handle messages."""
+        """Handle worker messages."""
         message = msg.get("message_type")
         LOGGER.info("WORKER RECEIVED MESSAGE %s", message)
 
@@ -117,7 +121,7 @@ class Worker:
             try:
                 self.map()
             except FileNotFoundError:
-                LOGGER.info("MAPPING: Exception thrown")
+                LOGGER.info("MAPPING exception")
 
         # New reducing task
         elif message == "new_reduce_task":
@@ -125,7 +129,7 @@ class Worker:
             try:
                 self.reduce()
             except FileNotFoundError:
-                LOGGER.info("REDUCING: Exception thrown")
+                LOGGER.info("REDUCING exception")
 
 
     def map(self):

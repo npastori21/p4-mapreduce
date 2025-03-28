@@ -35,7 +35,6 @@ class Manager:
         # Manager attributes
         self.host = host
         self.port = port
-        self.threads = []
         self.job_id = 0
         self.job_status = 0 # Is job completed?
         self.jobs = queue.Queue()
@@ -43,55 +42,37 @@ class Manager:
         self.signals = ThreadSafeOrderedDict()
         self.signals["shutdown"] = False
 
-       
-        with tempfile.TemporaryDirectory(prefix='mapreduce-shared-') as tmpdir:
-            LOGGER.info("Created tmpdir %s", tmpdir)
-            # UDP thread for heartbeats (port =+ 1 to prevent overlap)
-            worker_thread = threading.Thread(target=udp_server,args=(self.host,
-                                                    self.port,
-                                                    self.signals,
-                                                    self.handle_heartbeats))
-            self.threads.append(worker_thread)
-            worker_thread.start()
+        # UDP thread for heartbeats (port =+ 1 to prevent overlap)
+        worker_thread = threading.Thread(target=udp_server,args=(self.host,
+                                                self.port,
+                                                self.signals,
+                                                self.handle_heartbeats))
+        worker_thread.start()
 
-            # TCP thread for messages
-            messages_thread = threading.Thread(target=tcp_server,args=(self.host,
-                                                    self.port,
-                                                    self.signals,
-                                                    self.handle_messages,))
-            self.threads.append(messages_thread)
-            messages_thread.start()
+        # TCP thread for messages
+        messages_thread = threading.Thread(target=tcp_server,args=(self.host,
+                                                self.port,
+                                                self.signals,
+                                                self.handle_messages,))
+        messages_thread.start()
 
-            # job_thread = threading.Thread(target=self.handle_jobs, daemon=True)
-            # self.threads.append(job_thread)
-            # job_thread.start()
+        # Thread for checking worker statuses
+        workers_status_thread = threading.Thread(target=self.check_heartbeats)
+        workers_status_thread.start()
 
-            # Thread for checking worker statuses
-            workers_status_thread = threading.Thread(target=self.check_heartbeats)
-            workers_status_thread.start()
+        LOGGER.info("starting jobs")
+        self.handle_jobs()
+        LOGGER.info("JOBS COMPLETED")
 
-            # TODO: not sure if this is needed
-            # Fault tolerance thread
-            # fault_tolerance_thread = threading.Thread(target=self.fault_tolerance, daemon=True)
-            # self.threads.append(fault_tolerance_thread)
-            # fault_tolerance_thread.start()
-            LOGGER.info("starting jobs")
-            self.handle_jobs(tmpdir)
-            
-        # LOGGER.info("JOBS COMPLETED")
-            # Join threads when they stop running
-            # for thread in self.threads:
-            #     thread.join()
-            worker_thread.join()
-            LOGGER.info("workers thread")
-            # job_thread.join()
-            LOGGER.info("jobs thread")
-            messages_thread.join()
-            LOGGER.info("messages thread")
-            workers_status_thread.join()
-            LOGGER.info("status thread")
+        # Join threads when they stop running
+        worker_thread.join()
+        LOGGER.info("workers thread joined")
+        messages_thread.join()
+        LOGGER.info("messages thread joined")
+        workers_status_thread.join()
+        LOGGER.info("status thread joined")
 
-        LOGGER.info("Cleaned tmpdir %s", tmpdir)
+        LOGGER.info("Done")
 
     def handle_heartbeats(self, worker):
             """Update worker heartbeat."""
@@ -164,7 +145,7 @@ class Manager:
                 self.assign_task(job, directory, worker_num, task)
 
 
-    def handle_jobs(self, manager_dir):
+    def handle_jobs(self):
             """Assign jobs to workers and run."""
             LOGGER.info("in jobs")
             while not self.signals["shutdown"]:
@@ -178,17 +159,18 @@ class Manager:
                     if job.out_dir.exists() and job.out_dir.is_dir():
                         shutil.rmtree(job.out_dir)
                     job.out_dir.mkdir(parents=True, exist_ok=True)
-                    prefix = f"{manager_dir}-job{job.id_:05d}"
+                    pre = f"mapreduce-shared-job{job.id_:05d}-"
                     self.job_status = 0
                     info = job.info["num_mappers"]
-                    
-                    #Create intermediate directory
-                    intermediate_dir = Path(manager_dir) / f"job-{job.id_:05d}"
-                    if intermediate_dir.exists():
-                        LOGGER.info("Removing existing intermediate directory: %s", intermediate_dir)
-                        shutil.rmtree(intermediate_dir)
-                    intermediate_dir.mkdir(parents=True)
-                    LOGGER.info("Created intermediate directory: %s", intermediate_dir)
+                    with tempfile.TemporaryDirectory(prefix=pre) as tmpdir:
+                        LOGGER.info("Created tmpdir %s", tmpdir)
+                        # Create intermediate directory
+                        intermediate_dir = Path(tmpdir) / f"job-{job.id_:05d}"
+                        if intermediate_dir.exists():
+                            LOGGER.info("Removing existing intermediate directory: %s", intermediate_dir)
+                            shutil.rmtree(intermediate_dir)
+                        intermediate_dir.mkdir(parents=True)
+                        LOGGER.info("Created intermediate directory: %s", intermediate_dir)
                     # Create shared directory
 
                     while not self.signals["shutdown"] and job.state != "f":
