@@ -77,22 +77,26 @@ class Worker:
 
     def heartbeat(self):
         """Send heartbeat."""
-        with self.acknowledged:
-            while not self.ack and not self.signals["shutdown"]:
-                self.acknowledged.wait()
-        while not self.signals["shutdown"]:
-            heartbeat = {
-                "message_type": "heartbeat",
-                "worker_host": self.host_port[0],
-                "worker_port": self.host_port[1],
-            }
-            try:
-                udp_client(heartbeat, self.m_host_port[0], self.m_host_port[1])
-                LOGGER.info("HEARTBEAT")
-            except ConnectionRefusedError:
-                LOGGER.info("HEARTBEAT: Connection refused")
-                continue
-            time.sleep(2)
+        try:
+            with self.acknowledged:
+                while not self.ack and not self.signals["shutdown"]:
+                    self.acknowledged.wait()
+            while not self.signals["shutdown"]:
+                LOGGER.info("Sending heartbeat to %s:%s", self.m_host_port[0], self.m_host_port[1])
+                heartbeat = {
+                    "message_type": "heartbeat",
+                    "worker_host": self.host_port[0],
+                    "worker_port": self.host_port[1],
+                }
+                try:
+                    udp_client(heartbeat, self.m_host_port[0], self.m_host_port[1])
+                    LOGGER.info("HEARTBEAT")
+                except ConnectionRefusedError:
+                    LOGGER.info("HEARTBEAT: Connection refused")
+                    continue
+                time.sleep(2)
+        except Exception as e:
+            LOGGER.error("Heartbeat thread crashed: %s", e, exc_info=True)
 
     def handle_messages(self, msg):
         """Handle worker messages."""

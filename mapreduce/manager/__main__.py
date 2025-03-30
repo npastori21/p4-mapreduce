@@ -40,6 +40,7 @@ class Manager:
         self.workers = ThreadSafeOrderedDict()
         self.signals = ThreadSafeOrderedDict()
         self.signals["shutdown"] = False
+        LOGGER.info("MHost %s, port %s", self.host, self.port)
         with tempfile.TemporaryDirectory(prefix='mapreduce-shared-') as tmpdir:
             # UDP thread for heartbeats (port =+ 1 to prevent overlap)
             worker_thread = threading.Thread(target=udp, args=(self.host,
@@ -73,18 +74,22 @@ class Manager:
 
             LOGGER.info("Done")
 
-    def h_beats(self, worker):
+    def h_beats(self, message):
         """Update worker heartbeat."""
-        if worker["message_type"] == "heartbeat" and len(self.workers) > 0:
+        LOGGER.info("Received heartbeat message: %s", message)
+        if message["message_type"] == "heartbeat" and len(self.workers) > 0:
             LOGGER.info("MANAGER RECEIVED HEARTBEAT")
             # Get worker's host and port
-            host = worker["worker_host"]
-            port = worker["worker_port"]
+            host = message["worker_host"]
+            port = message["worker_port"]
             if (host, port) in self.workers:
                 # If worker is alive, update heartbeat
+                
                 if self.workers[(host, port)].status != "dead":
                     self.workers[(host, port)].update_heartbeat(time.time())
                     LOGGER.info("Updated %s's heartbeat", (host, port))
+                else:
+                    LOGGER.info(" %s is dead", (host, port))
             else:  # Unregistered worker, ignore
                 LOGGER.warning("Heartbeat from unreg worker %s", (host, port))
 
@@ -196,7 +201,7 @@ class Manager:
         message = message_dict["message_type"]
         new_message = {}
         LOGGER.info("MANAGER RECEIVED MESSAGE %s", message)
-
+        LOGGER.info("here")
         # Shut down
         if message == "shutdown":
             self.signals["shutdown"] = True
