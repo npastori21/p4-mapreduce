@@ -1,0 +1,486 @@
+INFO:mapreduce.manager.__main__:Starting manager host=localhost port=59585 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.manager.__main__:MHost localhost, port 59585
+INFO:mapreduce.manager.__main__:Starting jobs
+INFO:mapreduce.manager.__main__:in jobs
+INFO:mapreduce.utils.network:UDP listening on port 59585, hosted on localhost
+INFO:mapreduce.utils.network:TCP listening on port 59585, hosted on localhost
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:Starting worker host=localhost port=59586 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.worker.__main__:manager_host=localhost manager_port=59585
+INFO:mapreduce.utils.network:TCP listening on port 59586, hosted on localhost
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register", "worker_host": "localhost", "worker_port": 59586}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register", "worker_host": "localhost", "worker_port": 59586}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE register
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register_ack"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register_ack"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE register_ack
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register_ack'}
+INFO:mapreduce.utils.network:UDP sending message {"message_type": "heartbeat", "worker_host": "localhost", "worker_port": 59586}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register', 'worker_host': 'localhost', 'worker_port': 59586}
+INFO:mapreduce.worker.__main__:Starting worker host=localhost port=59587 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.worker.__main__:manager_host=localhost manager_port=59585
+INFO:mapreduce.utils.network:TCP listening on port 59587, hosted on localhost
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register", "worker_host": "localhost", "worker_port": 59587}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register", "worker_host": "localhost", "worker_port": 59587}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE register
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register_ack"}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register', 'worker_host': 'localhost', 'worker_port': 59587}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register_ack"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE register_ack
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register_ack'}
+INFO:mapreduce.utils.network:UDP sending message {"message_type": "heartbeat", "worker_host": "localhost", "worker_port": 59587}
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:Starting worker host=localhost port=59588 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.worker.__main__:manager_host=localhost manager_port=59585
+INFO:mapreduce.utils.network:TCP listening on port 59588, hosted on localhost
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register", "worker_host": "localhost", "worker_port": 59588}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register", "worker_host": "localhost", "worker_port": 59588}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE register
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register_ack"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register_ack"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE register_ack
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register_ack'}
+INFO:mapreduce.utils.network:UDP sending message {"message_type": "heartbeat", "worker_host": "localhost", "worker_port": 59588}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register', 'worker_host': 'localhost', 'worker_port': 59588}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_manager_job", "input_directory": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input", "output_directory": "/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_grep0", "mapper_executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_map.py", "reducer_executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_reduce.py", "num_mappers": 2, "num_reducers": 1}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE new_manager_job
+INFO:mapreduce.manager.__main__:ADDED JOB 0
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_manager_job', 'input_directory': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input', 'output_directory': '/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_grep0', 'mapper_executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_map.py', 'reducer_executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_reduce.py', 'num_mappers': 2, 'num_reducers': 1}
+INFO:mapreduce.utils.job:mapping task
+INFO:mapreduce.utils.job:STARTING JOB MAPPING PARTITION
+INFO:mapreduce.manager.__main__:Doing job 0, state: mapping
+INFO:mapreduce.manager.__main__:Made interdir: /var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59586)
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_map_task", "task_id": 0, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file01", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file03", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file05", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file07"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_map.py", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000", "num_partitions": 1}
+INFO:mapreduce.manager.__main__:ASSIGNED MAPPER
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_map_task", "task_id": 0, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file01", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file03", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file05", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file07"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_map.py", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000", "num_partitions": 1}'
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59587)
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_map_task
+INFO:mapreduce.worker.__main__:MAPPING
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_map_task", "task_id": 1, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file02", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file04", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file06", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file08"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_map.py", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000", "num_partitions": 1}
+INFO:mapreduce.manager.__main__:ASSIGNED MAPPER
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_map_task", "task_id": 1, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file02", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file04", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file06", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file08"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_map.py", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000", "num_partitions": 1}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_map_task
+INFO:mapreduce.worker.__main__:MAPPING
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 1, "worker_host": "localhost", "worker_port": 59587}
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59586}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_map_task', 'task_id': 1, 'input_paths': ['/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file02', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file04', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file06', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file08'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_map.py', 'output_directory': '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000', 'num_partitions': 1}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_map_task', 'task_id': 0, 'input_paths': ['/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file01', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file03', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file05', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file07'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_map.py', 'output_directory': '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000', 'num_partitions': 1}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 1, "worker_host": "localhost", "worker_port": 59587}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 1, 'worker_host': 'localhost', 'worker_port': 59587}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59586}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 0, 'worker_host': 'localhost', 'worker_port': 59586}
+INFO:mapreduce.utils.job:reducing task
+INFO:mapreduce.utils.job:STARTING JOB REDUCING PARTITION
+INFO:mapreduce.manager.__main__:STARTING REDUCER
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59586)
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_reduce_task", "task_id": 0, "input_paths": ["/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000/maptask00000-part00000", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000/maptask00001-part00000"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_reduce.py", "output_directory": "/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_grep0"}
+INFO:mapreduce.manager.__main__:ASSIGNED REDUCER
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_reduce_task", "task_id": 0, "input_paths": ["/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000/maptask00000-part00000", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000/maptask00001-part00000"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_reduce.py", "output_directory": "/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_grep0"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_reduce_task
+INFO:mapreduce.worker.__main__:REDUCING
+INFO:mapreduce.worker.__main__:reducing message: {'message_type': 'finished', 'task_id': 0, 'worker_host': 'localhost', 'worker_port': 59586}
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59586}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_reduce_task', 'task_id': 0, 'input_paths': ['/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000/maptask00000-part00000', '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000/maptask00001-part00000'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/grep_reduce.py', 'output_directory': '/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_grep0'}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59586}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 0, 'worker_host': 'localhost', 'worker_port': 59586}
+INFO:mapreduce.utils.job:task done
+INFO:mapreduce.manager.__main__:Job done, rm interdir: /var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-2v1pu86r/job-00000
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:Connection timed out
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE shutdown
+INFO:mapreduce.manager.__main__:JOBS COMPLETED
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "shutdown"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE shutdown
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.worker.__main__:Messages thread
+INFO:mapreduce.worker.__main__:Heartbeats thread
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "shutdown"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE shutdown
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.worker.__main__:Messages thread
+INFO:mapreduce.worker.__main__:Heartbeats thread
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "shutdown"}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE shutdown
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.worker.__main__:Messages thread
+INFO:mapreduce.worker.__main__:Heartbeats thread
+INFO:mapreduce.manager.__main__:Workers thread joined
+INFO:mapreduce.manager.__main__:Messages thread joined
+INFO:mapreduce.manager.__main__:Status thread joined
+INFO:mapreduce.manager.__main__:Done
+INFO:mapreduce.manager.__main__:Starting manager host=localhost port=59614 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.manager.__main__:MHost localhost, port 59614
+INFO:mapreduce.manager.__main__:Starting jobs
+INFO:mapreduce.manager.__main__:in jobs
+INFO:mapreduce.utils.network:UDP listening on port 59614, hosted on localhost
+INFO:mapreduce.utils.network:TCP listening on port 59614, hosted on localhost
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:Starting worker host=localhost port=59615 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.worker.__main__:manager_host=localhost manager_port=59614
+INFO:mapreduce.utils.network:TCP listening on port 59615, hosted on localhost
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register", "worker_host": "localhost", "worker_port": 59615}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register", "worker_host": "localhost", "worker_port": 59615}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE register
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register_ack"}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register', 'worker_host': 'localhost', 'worker_port': 59615}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register_ack"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE register_ack
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register_ack'}
+INFO:mapreduce.utils.network:UDP sending message {"message_type": "heartbeat", "worker_host": "localhost", "worker_port": 59615}
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:Starting worker host=localhost port=59616 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.worker.__main__:manager_host=localhost manager_port=59614
+INFO:mapreduce.utils.network:TCP listening on port 59616, hosted on localhost
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register", "worker_host": "localhost", "worker_port": 59616}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register", "worker_host": "localhost", "worker_port": 59616}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE register
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register_ack"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register_ack"}'
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register', 'worker_host': 'localhost', 'worker_port': 59616}
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE register_ack
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register_ack'}
+INFO:mapreduce.utils.network:UDP sending message {"message_type": "heartbeat", "worker_host": "localhost", "worker_port": 59616}
+INFO:mapreduce.worker.__main__:Starting worker host=localhost port=59617 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.worker.__main__:manager_host=localhost manager_port=59614
+INFO:mapreduce.utils.network:TCP listening on port 59617, hosted on localhost
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register", "worker_host": "localhost", "worker_port": 59617}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register", "worker_host": "localhost", "worker_port": 59617}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE register
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register_ack"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register_ack"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE register_ack
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register_ack'}
+INFO:mapreduce.utils.network:UDP sending message {"message_type": "heartbeat", "worker_host": "localhost", "worker_port": 59617}
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register', 'worker_host': 'localhost', 'worker_port': 59617}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_manager_job", "input_directory": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input", "output_directory": "/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_wordcount0", "mapper_executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "reducer_executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh", "num_mappers": 2, "num_reducers": 1}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE new_manager_job
+INFO:mapreduce.manager.__main__:ADDED JOB 0
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_manager_job', 'input_directory': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input', 'output_directory': '/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_wordcount0', 'mapper_executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh', 'reducer_executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh', 'num_mappers': 2, 'num_reducers': 1}
+INFO:mapreduce.utils.job:mapping task
+INFO:mapreduce.utils.job:STARTING JOB MAPPING PARTITION
+INFO:mapreduce.manager.__main__:Doing job 0, state: mapping
+INFO:mapreduce.manager.__main__:Made interdir: /var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59615)
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_map_task", "task_id": 0, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file01", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file03", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file05", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file07"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000", "num_partitions": 1}
+INFO:mapreduce.manager.__main__:ASSIGNED MAPPER
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59616)
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_map_task", "task_id": 0, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file01", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file03", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file05", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file07"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000", "num_partitions": 1}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_map_task
+INFO:mapreduce.worker.__main__:MAPPING
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_map_task", "task_id": 1, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file02", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file04", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file06", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file08"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000", "num_partitions": 1}
+INFO:mapreduce.manager.__main__:ASSIGNED MAPPER
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_map_task", "task_id": 1, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file02", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file04", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file06", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file08"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000", "num_partitions": 1}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_map_task
+INFO:mapreduce.worker.__main__:MAPPING
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 1, "worker_host": "localhost", "worker_port": 59616}
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59615}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_map_task', 'task_id': 1, 'input_paths': ['/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file02', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file04', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file06', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file08'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh', 'output_directory': '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000', 'num_partitions': 1}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_map_task', 'task_id': 0, 'input_paths': ['/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file01', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file03', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file05', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file07'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh', 'output_directory': '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000', 'num_partitions': 1}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 1, "worker_host": "localhost", "worker_port": 59616}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 1, 'worker_host': 'localhost', 'worker_port': 59616}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59615}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 0, 'worker_host': 'localhost', 'worker_port': 59615}
+INFO:mapreduce.utils.job:reducing task
+INFO:mapreduce.utils.job:STARTING JOB REDUCING PARTITION
+INFO:mapreduce.manager.__main__:STARTING REDUCER
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59615)
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_reduce_task", "task_id": 0, "input_paths": ["/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000/maptask00000-part00000", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000/maptask00001-part00000"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh", "output_directory": "/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_wordcount0"}
+INFO:mapreduce.manager.__main__:ASSIGNED REDUCER
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_reduce_task", "task_id": 0, "input_paths": ["/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000/maptask00000-part00000", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000/maptask00001-part00000"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh", "output_directory": "/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_wordcount0"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_reduce_task
+INFO:mapreduce.worker.__main__:REDUCING
+INFO:mapreduce.worker.__main__:reducing message: {'message_type': 'finished', 'task_id': 0, 'worker_host': 'localhost', 'worker_port': 59615}
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59615}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_reduce_task', 'task_id': 0, 'input_paths': ['/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000/maptask00000-part00000', '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000/maptask00001-part00000'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh', 'output_directory': '/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_wordcount0'}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59615}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 0, 'worker_host': 'localhost', 'worker_port': 59615}
+INFO:mapreduce.utils.job:task done
+INFO:mapreduce.manager.__main__:Job done, rm interdir: /var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-wa32hns4/job-00000
+INFO:mapreduce.utils.network:Connection timed out
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE shutdown
+INFO:mapreduce.manager.__main__:JOBS COMPLETED
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "shutdown"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE shutdown
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.worker.__main__:Messages thread
+INFO:mapreduce.worker.__main__:Heartbeats thread
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "shutdown"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE shutdown
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "shutdown"}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.worker.__main__:Messages thread
+INFO:mapreduce.worker.__main__:Heartbeats thread
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE shutdown
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.worker.__main__:Messages thread
+INFO:mapreduce.worker.__main__:Heartbeats thread
+INFO:mapreduce.manager.__main__:Workers thread joined
+INFO:mapreduce.manager.__main__:Messages thread joined
+INFO:mapreduce.manager.__main__:Status thread joined
+INFO:mapreduce.manager.__main__:Done
+INFO:mapreduce.manager.__main__:Starting manager host=localhost port=59643 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.manager.__main__:MHost localhost, port 59643
+INFO:mapreduce.manager.__main__:Starting jobs
+INFO:mapreduce.manager.__main__:in jobs
+INFO:mapreduce.utils.network:TCP listening on port 59643, hosted on localhost
+INFO:mapreduce.utils.network:UDP listening on port 59643, hosted on localhost
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:Starting worker host=localhost port=59644 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.worker.__main__:manager_host=localhost manager_port=59643
+INFO:mapreduce.utils.network:TCP listening on port 59644, hosted on localhost
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register", "worker_host": "localhost", "worker_port": 59644}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register", "worker_host": "localhost", "worker_port": 59644}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE register
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register_ack"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register_ack"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE register_ack
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register_ack'}
+INFO:mapreduce.utils.network:UDP sending message {"message_type": "heartbeat", "worker_host": "localhost", "worker_port": 59644}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register', 'worker_host': 'localhost', 'worker_port': 59644}
+INFO:mapreduce.worker.__main__:Starting worker host=localhost port=59645 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.worker.__main__:manager_host=localhost manager_port=59643
+INFO:mapreduce.utils.network:TCP listening on port 59645, hosted on localhost
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register", "worker_host": "localhost", "worker_port": 59645}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register", "worker_host": "localhost", "worker_port": 59645}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE register
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register_ack"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register_ack"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE register_ack
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register_ack'}
+INFO:mapreduce.utils.network:UDP sending message {"message_type": "heartbeat", "worker_host": "localhost", "worker_port": 59645}
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register', 'worker_host': 'localhost', 'worker_port': 59645}
+INFO:mapreduce.worker.__main__:Starting worker host=localhost port=59646 pwd=/Users/emilyabrams/Downloads/eecs485/p4-mapreduce
+INFO:mapreduce.worker.__main__:manager_host=localhost manager_port=59643
+INFO:mapreduce.utils.network:TCP listening on port 59646, hosted on localhost
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register", "worker_host": "localhost", "worker_port": 59646}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register", "worker_host": "localhost", "worker_port": 59646}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE register
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "register_ack"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "register_ack"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE register_ack
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register_ack'}
+INFO:mapreduce.utils.network:UDP sending message {"message_type": "heartbeat", "worker_host": "localhost", "worker_port": 59646}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'register', 'worker_host': 'localhost', 'worker_port': 59646}
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_manager_job", "input_directory": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input", "output_directory": "/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_many_mappers0", "mapper_executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "reducer_executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh", "num_mappers": 4, "num_reducers": 2}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE new_manager_job
+INFO:mapreduce.manager.__main__:ADDED JOB 0
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_manager_job', 'input_directory': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input', 'output_directory': '/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_many_mappers0', 'mapper_executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh', 'reducer_executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh', 'num_mappers': 4, 'num_reducers': 2}
+INFO:mapreduce.utils.job:mapping task
+INFO:mapreduce.utils.job:STARTING JOB MAPPING PARTITION
+INFO:mapreduce.manager.__main__:Doing job 0, state: mapping
+INFO:mapreduce.manager.__main__:Made interdir: /var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59644)
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_map_task", "task_id": 0, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file01", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file05"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000", "num_partitions": 2}
+INFO:mapreduce.manager.__main__:ASSIGNED MAPPER
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59645)
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_map_task", "task_id": 0, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file01", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file05"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000", "num_partitions": 2}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_map_task
+INFO:mapreduce.worker.__main__:MAPPING
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_map_task", "task_id": 1, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file02", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file06"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000", "num_partitions": 2}
+INFO:mapreduce.manager.__main__:ASSIGNED MAPPER
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59646)
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_map_task", "task_id": 1, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file02", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file06"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000", "num_partitions": 2}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_map_task
+INFO:mapreduce.worker.__main__:MAPPING
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_map_task", "task_id": 2, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file03", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file07"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000", "num_partitions": 2}
+INFO:mapreduce.manager.__main__:ASSIGNED MAPPER
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_map_task", "task_id": 2, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file03", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file07"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000", "num_partitions": 2}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_map_task
+INFO:mapreduce.worker.__main__:MAPPING
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 1, "worker_host": "localhost", "worker_port": 59645}
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59644}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_map_task', 'task_id': 1, 'input_paths': ['/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file02', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file06'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh', 'output_directory': '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000', 'num_partitions': 2}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_map_task', 'task_id': 0, 'input_paths': ['/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file01', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file05'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh', 'output_directory': '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000', 'num_partitions': 2}
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 2, "worker_host": "localhost", "worker_port": 59646}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_map_task', 'task_id': 2, 'input_paths': ['/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file03', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file07'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh', 'output_directory': '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000', 'num_partitions': 2}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 1, "worker_host": "localhost", "worker_port": 59645}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 1, 'worker_host': 'localhost', 'worker_port': 59645}
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59645)
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59644}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 0, 'worker_host': 'localhost', 'worker_port': 59644}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 2, "worker_host": "localhost", "worker_port": 59646}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 2, 'worker_host': 'localhost', 'worker_port': 59646}
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_map_task", "task_id": 3, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file04", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file08"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000", "num_partitions": 2}
+INFO:mapreduce.manager.__main__:ASSIGNED MAPPER
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_map_task", "task_id": 3, "input_paths": ["/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file04", "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file08"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh", "output_directory": "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000", "num_partitions": 2}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_map_task
+INFO:mapreduce.worker.__main__:MAPPING
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:MAPPING EXECUTABLE
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 3, "worker_host": "localhost", "worker_port": 59645}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_map_task', 'task_id': 3, 'input_paths': ['/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file04', '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/input/file08'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_map.sh', 'output_directory': '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000', 'num_partitions': 2}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 3, "worker_host": "localhost", "worker_port": 59645}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 3, 'worker_host': 'localhost', 'worker_port': 59645}
+INFO:mapreduce.utils.job:reducing task
+INFO:mapreduce.utils.job:STARTING JOB REDUCING PARTITION
+INFO:mapreduce.manager.__main__:STARTING REDUCER
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59644)
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_reduce_task", "task_id": 0, "input_paths": ["/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00000-part00000", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00001-part00000", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00002-part00000", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00003-part00000"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh", "output_directory": "/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_many_mappers0"}
+INFO:mapreduce.manager.__main__:ASSIGNED REDUCER
+INFO:mapreduce.manager.__main__:PICKED WORKER ('localhost', 59645)
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_reduce_task", "task_id": 0, "input_paths": ["/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00000-part00000", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00001-part00000", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00002-part00000", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00003-part00000"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh", "output_directory": "/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_many_mappers0"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_reduce_task
+INFO:mapreduce.worker.__main__:REDUCING
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "new_reduce_task", "task_id": 1, "input_paths": ["/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00000-part00001", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00001-part00001", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00002-part00001", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00003-part00001"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh", "output_directory": "/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_many_mappers0"}
+INFO:mapreduce.manager.__main__:ASSIGNED REDUCER
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "new_reduce_task", "task_id": 1, "input_paths": ["/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00000-part00001", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00001-part00001", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00002-part00001", "/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00003-part00001"], "executable": "/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh", "output_directory": "/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_many_mappers0"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE new_reduce_task
+INFO:mapreduce.worker.__main__:REDUCING
+INFO:mapreduce.worker.__main__:reducing message: {'message_type': 'finished', 'task_id': 1, 'worker_host': 'localhost', 'worker_port': 59645}
+INFO:mapreduce.worker.__main__:reducing message: {'message_type': 'finished', 'task_id': 0, 'worker_host': 'localhost', 'worker_port': 59644}
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.worker.__main__:WORKER TASK DONE
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 1, "worker_host": "localhost", "worker_port": 59645}
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59644}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_reduce_task', 'task_id': 1, 'input_paths': ['/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00000-part00001', '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00001-part00001', '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00002-part00001', '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00003-part00001'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh', 'output_directory': '/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_many_mappers0'}
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'new_reduce_task', 'task_id': 0, 'input_paths': ['/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00000-part00000', '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00001-part00000', '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00002-part00000', '/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000/maptask00003-part00000'], 'executable': '/Users/emilyabrams/Downloads/eecs485/p4-mapreduce/tests/testdata/exec/wc_reduce.sh', 'output_directory': '/private/var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/pytest-of-emilyabrams/pytest-151/test_many_mappers0'}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 1, "worker_host": "localhost", "worker_port": 59645}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 1, 'worker_host': 'localhost', 'worker_port': 59645}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "finished", "task_id": 0, "worker_host": "localhost", "worker_port": 59644}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE finished
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'finished', 'task_id': 0, 'worker_host': 'localhost', 'worker_port': 59644}
+INFO:mapreduce.utils.job:task done
+INFO:mapreduce.manager.__main__:Job done, rm interdir: /var/folders/bg/w_g2t75d3dq2m4hcn5s2kx7r0000gn/T/mapreduce-shared-m7jj_0u_/job-00000
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.manager.__main__:MANAGER RECEIVED MESSAGE shutdown
+INFO:mapreduce.manager.__main__:JOBS COMPLETED
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "shutdown"}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE shutdown
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "shutdown"}
+INFO:mapreduce.worker.__main__:Messages thread
+INFO:mapreduce.worker.__main__:Heartbeats thread
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE shutdown
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.utils.network:TCP sent message {"message_type": "shutdown"}
+INFO:mapreduce.worker.__main__:Messages thread
+INFO:mapreduce.worker.__main__:Heartbeats thread
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.utils.network:TCP got data: b'{"message_type": "shutdown"}'
+INFO:mapreduce.utils.network:TCP got data: b''
+INFO:mapreduce.worker.__main__:WORKER RECEIVED MESSAGE shutdown
+INFO:mapreduce.utils.network:TCP got message {'message_type': 'shutdown'}
+INFO:mapreduce.worker.__main__:Messages thread
+INFO:mapreduce.worker.__main__:Heartbeats thread
+INFO:mapreduce.manager.__main__:Workers thread joined
+INFO:mapreduce.manager.__main__:Messages thread joined
+INFO:mapreduce.manager.__main__:Status thread joined
+INFO:mapreduce.manager.__main__:Done

@@ -87,4 +87,4 @@ def udp_client(msg, host, port):
         # Send a message
         msg_str = json.dumps(msg)
         LOGGER.info("UDP sending message %s", msg_str)
-        sock.sendto(msg_str.encode('utf-8'), (host, port))
+        sock.sendall(msg_str.encode('utf-8'), (host, port))
