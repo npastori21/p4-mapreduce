@@ -24,12 +24,15 @@ class Job:
         """Change job state."""
         if self.state == "start":
             self.state = "mapping"
+            LOGGER.info("mapping task")
             self.mapping_partition()
         elif self.state == "mapping":
             self.state = "reducing"
+            LOGGER.info("reducing task")
             self.reducing_partition(new_dir)
         else:
             self.state = "f"
+            LOGGER.info("task done")
 
     def mapping_partition(self):
         """Partition mapping."""

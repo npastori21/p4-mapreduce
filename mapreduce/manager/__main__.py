@@ -84,7 +84,7 @@ class Manager:
             port = message["worker_port"]
             if (host, port) in self.workers:
                 # If worker is alive, update heartbeat
-                
+
                 if self.workers[(host, port)].status != "dead":
                     self.workers[(host, port)].update_heartbeat(time.time())
                     LOGGER.info("Updated %s's heartbeat", (host, port))
@@ -154,26 +154,29 @@ class Manager:
             if self.jobs.qsize() == 0:
                 continue  # No jobs to process
 
-            job = self.get_next_job(tmpdir)
-            self.process_job(job)
+            job, interm_dir = self.get_next_job(tmpdir)
+            self.process_job(job, interm_dir)
 
-    def process_job(self, job):
+    def process_job(self, job, interm_dir):
         """Process an individual job through mapping and reducing phases."""
+        num = job.info["num_mappers"]
         while not self.signals["shutdown"] and job.state != "f":
             if len(self.workers) == 0:
+                time.sleep(1)
                 continue  # No workers available
 
             ready = job.task_ready()
-            if self.job_status == job.info["num_mappers"] and not ready:
-                job.next_state(Path(job.interm_dir))
+            if self.job_status == num and not ready:
+                job.next_state(Path(interm_dir))
                 self.job_status = 0
                 if job.state == "reducing":
                     LOGGER.info("STARTING REDUCER")
+                    num = job.info["num_reducers"]
             elif ready:
-                self.get_worker(job, str(job.interm_dir))
+                self.get_worker(job, str(interm_dir))
 
-        LOGGER.info("Job done, rm interdir: %s", job.interm_dir)
-        shutil.rmtree(job.interm_dir)
+        LOGGER.info("Job done, rm interdir: %s", interm_dir)
+        shutil.rmtree(interm_dir)
 
     def get_next_job(self, tmpdir):
         """Get and set up next job."""
@@ -187,21 +190,20 @@ class Manager:
         job.out_dir.mkdir(parents=True, exist_ok=True)
 
         # Create intermediate directory
-        job.interm_dir = Path(tmpdir) / f"job-{job.id_:05d}"
-        if job.interm_dir.exists():
-            LOGGER.info("Rm existing idir: %s", job.interm_dir)
-            shutil.rmtree(job.interm_dir)
-        job.interm_dir.mkdir(parents=True)
-        LOGGER.info("Made interdir: %s", job.interm_dir)
+        interm_dir = Path(tmpdir) / f"job-{job.id_:05d}"
+        if interm_dir.exists():
+            LOGGER.info("Rm existing idir: %s", interm_dir)
+            shutil.rmtree(interm_dir)
+        interm_dir.mkdir(parents=True)
+        LOGGER.info("Made interdir: %s", interm_dir)
 
-        return job
+        return job, interm_dir
 
     def msgs(self, message_dict):
         """Handle messages."""
         message = message_dict["message_type"]
         new_message = {}
         LOGGER.info("MANAGER RECEIVED MESSAGE %s", message)
-        LOGGER.info("here")
         # Shut down
         if message == "shutdown":
             self.signals["shutdown"] = True

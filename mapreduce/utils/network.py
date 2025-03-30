@@ -78,6 +78,7 @@ def udp_server(host, port, signals, handle_messages):
             except json.JSONDecodeError:
                 continue
 
+
 def udp_client(msg, host, port):
     """Send messages via UDP."""
     # Create an INET, DGRAM socket, this is UDP
